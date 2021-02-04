@@ -10,6 +10,12 @@ export default new Router({
       path: '/add',
       name: 'add',
       component: () => import('./components/AddThing')
+    },
+    {
+      path: '/',
+      alias: '/things',
+      name: 'things',
+      component: () => import('./components/ThingsList')
     }
   ]
 });

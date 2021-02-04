@@ -15,6 +15,8 @@ const schema = Joi.object({
 })
 
 exports.create = ash(async function(req, res) {
+  console.log(req.body); // debug
+
   if (req.body.title === null && req.body.description === null) {
     res.status(400).send({
       error: 'Content can not be empty'
@@ -51,6 +53,8 @@ exports.create = ash(async function(req, res) {
 });
 
 exports.findAll = ash(async function(req, res) {
+  console.log(req.query); // debug
+
   const title = req.query.title;
   const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
@@ -66,5 +70,24 @@ exports.findAll = ash(async function(req, res) {
   }
 
   res.status(200).send(things);
+  return;
+});
+
+exports.findOne = ash(async function(req, res) {
+  console.log(req.params); // debug
+
+  const id = { id: req.params.id };
+  const thing = await db.Thing.findOne({
+    where: id
+  });
+
+  if (!thing) {
+    res.status(500).send({
+      error: 'Error retrieving Thing with id=' + req.params.id
+    });
+    return;
+  }
+
+  res.status(200).send(thing);
   return;
 });

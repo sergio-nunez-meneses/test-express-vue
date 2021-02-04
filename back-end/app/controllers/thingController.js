@@ -64,7 +64,23 @@ exports.findAll = ash(async function(req, res) {
 
   if (!things) {
     res.status(500).send({
-      error: 'An error occurred while retrieving  Things.'
+      error: 'An error occurred while retrieving  Things. Maybe Things were not found.'
+    });
+    return;
+  }
+
+  res.status(200).send(things);
+  return;
+});
+
+exports.findPublished = ash(async function(req, res) {
+  const things = await db.Thing.findAll({
+    where: { published: true }
+  });
+
+  if (things.length === 0) {
+    res.status(500).send({
+      error: 'An error occurred while retrieving Things. Maybe Things were not found.'
     });
     return;
   }
@@ -83,7 +99,7 @@ exports.findOne = ash(async function(req, res) {
 
   if (!thing) {
     res.status(500).send({
-      error: `Error retrieving Thing with id=' + ${req.params.id}.`
+      error: `Error retrieving Thing with id=' + ${req.params.id}. Maybe Thing was not found.`
     });
     return;
   }

@@ -19,7 +19,7 @@ exports.create = ash(async function(req, res) {
 
   if (req.body.title === null && req.body.description === null) {
     res.status(400).send({
-      error: 'Content can not be empty'
+      error: 'Fields cannot be empty.'
     });
     return;
   }
@@ -41,13 +41,13 @@ exports.create = ash(async function(req, res) {
 
   if (!thing) {
     res.status(500).send({
-      error: 'An error occurred while creating your Thing'
+      error: 'An error occurred while creating your Thing.'
     });
     return;
   }
 
   res.status(200).send({
-    message: 'Thing created successfully'
+    message: 'Thing created successfully!'
   });
   return;
 });
@@ -64,7 +64,7 @@ exports.findAll = ash(async function(req, res) {
 
   if (!things) {
     res.status(500).send({
-      error: 'An error occurred while retrieving  Things'
+      error: 'An error occurred while retrieving  Things.'
     });
     return;
   }
@@ -83,11 +83,57 @@ exports.findOne = ash(async function(req, res) {
 
   if (!thing) {
     res.status(500).send({
-      error: 'Error retrieving Thing with id=' + req.params.id
+      error: `Error retrieving Thing with id=' + ${req.params.id}.`
     });
     return;
   }
 
   res.status(200).send(thing);
+  return;
+});
+
+exports.update = ash(async function(req, res) {
+  console.log(req.params); // debug
+  console.log(req.body); // debug
+
+  const requestKeys = Object.keys(req.body);
+  var error;
+
+  requestKeys.forEach(async function(key) {
+    if (req.body[requestKeys] === '' || req.body[requestKeys] === undefined) {
+      error = true;
+    }
+  });
+
+  if (error) {
+    res.status(400).send({
+      error: 'Fields cannot be empty.'
+    });
+    return;
+  }
+
+  const id = { id: req.params.id };
+  const thing = await db.Thing.update(
+    { ...req.body },
+    { where: id }
+  );
+
+  if (!thing) {
+    res.status(500).send({
+      error: `Error updating Thing with id=' + ${req.params.id}.`
+    });
+    return;
+  }
+
+  if (thing != 1) {
+    res.status(400).send({
+      error: `Cannot update Thing with id=${req.params.id}. Maybe Thing was not found or fields are empty.`
+    });
+    return;
+  }
+
+  res.status(200).send({
+    message: 'Thing updated successfully!'
+  });
   return;
 });

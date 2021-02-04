@@ -137,3 +137,31 @@ exports.update = ash(async function(req, res) {
   });
   return;
 });
+
+exports.delete = ash(async function(req, res) {
+  console.log(req.params); // debug
+
+  const id = { id: req.params.id };
+  const thing = await db.Thing.destroy({
+    where: id
+  });
+
+  if (!thing) {
+    res.status(500).send({
+      error: `Couldn't delete Thing with id=' + ${req.params.id}.`
+    });
+    return;
+  }
+
+  if (thing != 1) {
+    res.status(400).send({
+      error: `Cannot delete Thing with id=${req.params.id}. Maybe Thing was not found.`
+    });
+    return;
+  }
+
+  res.status(200).send({
+    message: 'Thing deleted successfully!'
+  });
+  return;
+});

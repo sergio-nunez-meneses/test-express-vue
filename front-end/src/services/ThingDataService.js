@@ -13,6 +13,18 @@ class ThingDataService {
     return http.get(`/things?title=${title}`);
   }
 
+  get(id) {
+    return http.get(`/things/${id}`);
+  }
+
+  update(id, data) {
+    return http.put(`/things/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/things/${id}`);
+  }
+
   deleteAll() {
     return http.delete(`/things`);
   }

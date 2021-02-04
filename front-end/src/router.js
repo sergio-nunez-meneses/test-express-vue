@@ -16,6 +16,11 @@ export default new Router({
       alias: '/things',
       name: 'things',
       component: () => import('./components/ThingsList')
+    },
+    {
+      path: '/things/:id',
+      name: 'thing-details',
+      component: () => import('./components/Thing')
     }
   ]
 });

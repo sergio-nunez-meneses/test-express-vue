@@ -6,5 +6,6 @@ router.get('/', thingController.findAll);
 router.get('/:id', thingController.findOne);
 router.put('/:id', thingController.update);
 router.delete('/:id', thingController.delete);
+router.delete('/', thingController.deleteAll);
 
 module.exports = router;

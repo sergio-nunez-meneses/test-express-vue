@@ -165,3 +165,22 @@ exports.delete = ash(async function(req, res) {
   });
   return;
 });
+
+exports.deleteAll = ash(async function(req, res) {
+  const things = await db.Thing.destroy({
+    where: {},
+    truncate: false
+  });
+
+  if (things === 0) {
+    res.status(500).send({
+      error: 'An error occurred while removing all Things. Maybe Things were not found.'
+    });
+    return;
+  }
+
+  res.status(200).send({
+    message: `${things} Things deleted successfully!`
+  });
+  return;
+});

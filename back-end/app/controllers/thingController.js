@@ -59,6 +59,7 @@ exports.findAll = ash(async function(req, res) {
   const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   const things = await db.Thing.findAll({
+    limit: 2,
     where: condition
   });
 
@@ -75,6 +76,7 @@ exports.findAll = ash(async function(req, res) {
 
 exports.findPublished = ash(async function(req, res) {
   const things = await db.Thing.findAll({
+    limit: 2,
     where: { published: true }
   });
 

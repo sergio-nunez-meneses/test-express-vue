@@ -2,7 +2,7 @@
 
 For database connection:
 
-- Change directory to ```app``` and run these lines in your terminal:
+- In the ```back-end``` directory, change directory to ```app``` and run these lines in your terminal:
 
   ```
   mkdir config

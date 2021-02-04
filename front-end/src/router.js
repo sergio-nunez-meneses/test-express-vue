@@ -7,17 +7,6 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      alias: '/things',
-      name: 'things',
-      component: () => import('./components/ThingsList')
-    },
-    {
-      path: '/things/:id',
-      name: 'thing-details',
-      component: () => import('./components/Thing')
-    },
-    {
       path: '/add',
       name: 'add',
       component: () => import('./components/AddThing')

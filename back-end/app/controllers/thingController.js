@@ -49,3 +49,22 @@ exports.create = ash(async function(req, res) {
   });
   return;
 });
+
+exports.findAll = ash(async function(req, res) {
+  const title = req.query.title;
+  const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  const things = await db.Thing.findAll({
+    where: condition
+  });
+
+  if (!things) {
+    res.status(500).send({
+      error: 'An error occurred while retrieving  Things'
+    });
+    return;
+  }
+
+  res.status(200).send(things);
+  return;
+});

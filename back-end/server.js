@@ -19,11 +19,23 @@ app.get('/', (req, res) => {
   res.json({ message: 'connection successful' });
 });
 
+db.sequelize.sync({ force: true })
+  .then(async function() {
+    const thing = await db.Thing.create({
+      id: 1,
+      title: 'Thing #1',
+      description: 'This is my first Thing.',
+      published: false,
+    });
+
+    if (!thing) {
+      console.error('An error occurred while creating your Thing');
+      return;
+    }
+
+    console.log('Database re-synced: Thing created successfully');
+  });
+
 app.listen(port, () => {
   console.log(`server is running on port ${port}.`);
 });
-
-db.sequelize.sync({ force: true })
-  .then(() => {
-    console.log('database dropped and re-synced');
-  });

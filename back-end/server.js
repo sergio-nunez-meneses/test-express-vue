@@ -21,19 +21,27 @@ app.get('/', (req, res) => {
 
 db.sequelize.sync({ force: true })
   .then(async function() {
-    const thing = await db.Thing.create({
-      id: 1,
-      title: 'Thing #1',
-      description: 'This is my first Thing.',
-      published: false,
-    });
+    const thingDescriptions = [
+      'This is my first thing.',
+      'This is my second thing.',
+      'This is my third thing.'
+    ];
 
-    if (!thing) {
-      console.error('An error occurred while creating your Thing');
-      return;
+    for (let i = 0; i < thingDescriptions.length; i++) {
+      let thing = await db.Thing.create({
+        id: i + 1,
+        title: `Thing #${i + 1}`,
+        description: thingDescriptions[i],
+        published: Math.random() >= 0.7 ? true : false
+      });
+
+      if (!thing) {
+        console.error(`An error occurred while creating your Thing #${i + 1}`);
+        return;
+      }
+
+      console.log(`Database re-synced: Thing #${i + 1} created successfully`);
     }
-
-    console.log('Database re-synced: Thing created successfully');
   });
 
 app.listen(port, () => {

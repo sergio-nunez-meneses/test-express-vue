@@ -53,7 +53,7 @@ Then, edit the ```config.json``` file with your database information:
 
 ### Front-end
 
-Base project has been installed using [Vue CLI](https://cli.vuejs.org/) as follows:
+Base project has been created using [Vue CLI](https://cli.vuejs.org/) as follows:
 
 ```
 vue create front-end

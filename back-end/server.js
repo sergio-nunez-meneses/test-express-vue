@@ -17,18 +17,28 @@ app.use('/api/things', thingRoutes);
 
 db.sequelize.sync({ force: true })
   .then(async function() {
-    const thingDescriptions = [
-      'This is my first thing.',
-      'This is my second thing.',
-      'This is my third thing.'
-    ];
+    const description = (i) => {
+      var j = i % 10;
+      var k = i % 100;
 
-    for (let i = 0; i < thingDescriptions.length; i++) {
+      if (j === 1 && k !== 11) {
+        return i + 'st';
+      }
+      if (j === 2 && k !== 12) {
+        return i + 'nd';
+      }
+      if (j === 3 && k !== 13) {
+        return i + 'rd';
+      }
+      return i + 'th';
+    }
+
+    for (let i = 0; i < 20; i++) {
       let thing = await db.Thing.create({
         id: i + 1,
         title: `Thing #${i + 1}`,
-        description: thingDescriptions[i],
-        published: Math.random() >= 0.7 ? true : false
+        description: `This is my ${description(i + 1)} thing.`,
+        published: Math.random() >= 0.6 ? true : false
       });
 
       if (!thing) {

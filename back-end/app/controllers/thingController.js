@@ -118,7 +118,7 @@ exports.update = ash(async function(req, res) {
   var error;
 
   requestKeys.forEach(async function(key) {
-    if (req.body[requestKeys] === '' || req.body[requestKeys] === undefined) {
+    if (req.body[key] === '' || req.body[key] === undefined) {
       error = true;
     }
   });

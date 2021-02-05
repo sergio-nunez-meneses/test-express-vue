@@ -11,13 +11,9 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ type: 'application/json' }));
 app.use('/api/things', thingRoutes);
-
-app.get('/', (req, res) => {
-  res.json({ message: 'connection successful' });
-});
 
 db.sequelize.sync({ force: true })
   .then(async function() {
@@ -46,4 +42,8 @@ db.sequelize.sync({ force: true })
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}.`);
+});
+
+app.get('/', (req, res) => {
+  res.json({ message: 'connection successful' });
 });

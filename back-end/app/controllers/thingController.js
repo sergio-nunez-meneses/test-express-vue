@@ -12,7 +12,7 @@ const schema = Joi.object({
     .min(5)
     .max(40)
     .required()
-})
+});
 
 exports.create = ash(async function(req, res) {
   console.log(req.body); // debug
